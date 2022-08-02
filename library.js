@@ -1,0 +1,1 @@
+export let meassage = "ES6 modules";

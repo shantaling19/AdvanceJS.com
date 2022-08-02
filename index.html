@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advance JS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+    <!-- PROMISES -->
+    
+<script> 
+
+        function prom(){
+            return new Promise(function(resolve, reject){
+                console.log("Fetching data, please wait..")
+                
+                setTimeout(() =>{
+               $.get("https://jsonplaceholder.typicode.com/users",function(data){
+                console.log(data);
+               }).fail(err => {
+                reject("Fail to load JSON.");
+               });
+              }, 3000)
+            });
+        }
+        
+
+        prom().then((result) => {
+            console.log(result);
+        }).catch((error) => {
+            console.log(error);
+        });
+    </script>
+
+    <!-- PROMISE ALL -->
+
+   <script>
+     let promiseCall = function(returnData, message)  {
+        return function(resolve, reject){
+            setTimeout(() => {
+            console.log(`The ${message} promise has resolved`);
+            resolve(returnData);
+        }, returnData * 100);
+      }
+    };
+
+    let p1 = new Promise(promiseCall(10,"first"));
+    let p2 = new Promise(promiseCall(20,"second"));
+    let p3 = new Promise(promiseCall(30,"third"));
+    let p4 = new Promise(function(resolve, reject){
+        reject("The 4th Promise has rejected.");
+    });
+
+    var total = 0;
+    Promise.all([p1,p2,p3,p4]).then((result) =>{
+        for(var i in result) { total += result[i]; }
+
+        console.log(`Results: ${result}`);
+    console.log(`Total: ${total}`);
+    }).catch((error) =>{
+         console.log(`Error: ${error}`);
+        });
+</script> 
+
+<!-- PROMISE END  -->
+
+<!-- ASYNC & AWAIT  -->
+
+<script>
+async function test(){
+    try{
+        const response = await fetch("json/student_data.json");
+        const students = await response.json();
+
+        return students;
+    }catch(error){
+        console.log(error);
+    }
+
+}
+
+test().then((res) => {
+console.log(res);
+});
+</script>
+
+<!-- SYMBOLS  -->
+
+<script>
+    let Age = Symbol("age");
+
+    let user = {
+        name : 'Lalit Baba',
+        class : 'Batch'
+    };
+
+    user[Age] = 25;
+    user["gender"] = "Male";
+
+   console.log(user);
+
+   console.log(JSON.stringify(user))
+</script>
+
+<!-- ITERATORS -->
+
+<script>
+    function numberIterator(arr){
+        var nextNum = 0;
+        return {
+            next(){
+                if(nextNum < arr.length){
+                    return{
+                        value : arr[nextNum++],
+                        done : false
+                    }
+                }else{
+                    return{
+                        done : true
+                    }
+                }
+            }
+        }
+    }
+
+    let numbers = [100,200,300,400,500];
+
+    let num = numberIterator(numbers);
+    console.log(num.next().value);
+    num.next();
+    console.log(num.next().value);
+    console.log(num.next().value);
+    console.log(num.next().value);
+
+</script>
+
+<!-- GENERATORS -->
+
+<script>
+    function *generateit(){
+        yield 'PHP';
+        yield 'Node';
+        yield 'Angular';
+        yield 'React';
+    }
+
+    let g = generateit();
+    console.log(g.next().value);
+    console.log(g.return('Ending Now'));
+    console.log(g.next().value);
+</script>
+
+<!-- STRICT MODE -->
+
+<script>
+    "use strict";
+    function test(a, b, c){
+
+        console.log(a + b + c);
+    }
+
+    test(10, 20, 30);
+</script>
+
+<!-- ERROR HANDLING -->
+
+<script>
+
+    try{
+        blabla;
+        }catch(error){
+            // console.log('Error has occured.');
+            console.log(error.name);
+            console.log(error.message);
+            console.log(error.stack);
+        }
+</script>
+<script>
+
+    try{
+    let json = '{"name":"LalitBaba","age":30}';
+    
+    let user = JSON.parse(json);
+
+    if(!user.name){
+        throw new Error("Incomplete data : No name");    
+    }
+
+    console.log(user.name);
+    console.log(user.age);
+}catch(error){
+    console.log(error);
+}finally{
+    console.log('Finally');
+}
+
+</script>
+
+ <!-- type of veriable -->
+        <!-- var veriable -->
+        <script>
+            document.write ( "<h2> 1-introduction  </h2>")
+            document.write ( "<h1> 2-type of veriable  </h1>")
+             document.write ( "<h2> var veriable  </h2>")
+             var a = "hello";
+             var a = "Lalit Baba";
+             a ="world"
+             document.write(a);
+     </script>
+     
+     
+     <!-- let veriable -->
+     <script>
+         document.write ( "<h2> let veriable  </h2>")
+         let x = "hello";
+         // let a = "Lalit Baba";
+         x ="world"
+         document.write(x);
+      </script>
+     
+     
+     <!-- const veriable  -->
+     <script>
+         document.write ( "<h2> const veriable  </h2>")
+         const y = "hello";
+         // const a = "Lalit Baba";
+         // a ="world"
+         document.write(y);
+      </script>
+     
+     
+      <!-- Template string -->
+     <script>
+        document.write ( "<h2> 3-Template string </h2>")
+        let User = "Lalit Baba";
+        let marks = 350;
+        let hello = `hello ${User} welcome to 2022`;
+        // document.write("hello" + user + "welcome to 2022");
+     
+        document.write(`hello ${User} welcome to 2022` +" <br> ");
+        document.write(`hello ${User} your marks is ${marks}`+" <br> ");
+        document.write(hello + " <br> " );
+     // let firstName = "yahoo ";
+        // let lastName =" baba";
+     
+        //  function fullName(firstName,lastName){
+        //    return `$(firstName)$(lastName)`;
+           
+        //  }
+        //  let k =`hello ${fullName(firstName,lastName)}`;
+        //  document.write(k+ " <br> " );
+     </script>
+     
+     
+     <!-- Arrow function -->
+     <script>
+        document.write ( "<h2> 4-Arrow function  </h2>")
+        let welcome = ( name, age ) => {
+           return `hello & welcome ${name} - ${age}`;
+     
+        }
+        document.write( welcome ("Lalit Baba",25 +" <br> "));
+     
+        let wel = ( name, age ) => `Hello & welcome ${name} - ${age}`;
+     
+        
+        document.write( wel ("Lalit Baba",25)+" <br> ");
+         </script>
+     
+     
+     <!-- Advance js Rest Operator -->
+      <script>
+        document.write ( "<h2> 5-Advance js Rest Operator </h2>")
+        function sum(){
+           // document.write(`hello ${name} :`);
+     
+             let sum =0;
+             for(let i in arguments){
+              sum += arguments[i];
+             }
+             document.write(sum +"<br>");
+        }
+        sum ( 20,30,40);
+        sum (  80,30,70);
+     
+        function sum(name, ...arguments){
+           document.write(`hello ${name} :`);
+     
+             let sum =0;
+             for(let i in arguments){
+              sum += arguments[i];
+             }
+             document.write(sum +"<br>");
+        }
+        sum ( "Lalit Baba" ,20,30,40);
+        sum ("ram singh"  ,80,30,70);
+     
+        function sum(name,course, ...arguments){
+           document.write(`hello ${name} of ${course}:`);
+     
+             let sum =0;
+             for(let i in arguments){
+              sum += arguments[i];
+             }
+             document.write(sum +"<br>");
+        }
+        sum ( "Lalit Baba","Btech" ,20,30,40);
+        sum ("ram singh","BA"  ,80,30,70);
+     </script>
+     
+     
+     <!-- Advance js spread Operator -->
+     <script>
+        document.write ( "<h2> 6-Advance js spread Operator </h2>")
+     function sum(name, ...args){
+        document.write(`hello ${name} : `);
+     
+          let sum =0;
+          for(let i in args){
+           sum += args[i];
+          }
+          document.write(sum +"<br>");
+     }
+     var arr = [20,30,40];
+     sum ( "Lalit Baba",  ...arr);
+     sum ("ram singh" ,80,30,70);
+     </script>
+     
+     
+     <!-- Advance js object literals -->
+       <script>
+        document.write ( "<h2> 7-Advance js object literals </h2>")
+        // E.G-1
+        let name = "Lalit Baba";
+        let course ="B.E"
+     
+        var obj ={
+           name,
+           course,
+        };
+        document.write(obj +"<br>");
+        console.log(obj);
+     
+        // E.G-2
+          let n = "name";
+     
+        var obj = {
+           [n] : "Lalit Baba",
+           course : "B.E"
+        };
+        document.write(obj +"<br>"); 
+        console.log(obj);
+     
+        // E.G-3
+        let N = "student";
+     
+     var obj = {
+        [N + "name"] : "Lalit Baba",
+        course : "B.E"
+     };
+     document.write(obj +"<br>"); 
+     console.log(obj);
+     
+     // E.G-4
+     </script>
+     
+     
+     <!-- Advance js Destructuring Array  -->
+     <script>
+        // e.g-1
+        document.write ( "<h2> 8-Advance js Destructuring Array </h2>")
+     let use = ["Lalit Baba",25,"delhi",["male", 25000]];
+     
+     let[ nam,age,city,[gender,salary]] = use;
+      
+      document.write(nam +"<br>");
+      document.write(age +"<br>");
+      document.write(city +"<br>");
+      document.write(gender+"<br>");
+      document.write(salary+"<br>");
+      
+     //  e.g-2
+     let users = ["Lalit Baba",25,"delhi"];
+     
+     let[Name ,...args] = users;
+      
+      document.write(Name +"<br>");
+      document.write(args);
+     </script>
+     
+     
+     <!-- Advance js Destructuring Object -->
+     <script>
+        document.write ( "<h2> 9-Advance js Destructuring Object </h2>")
+        let userse = {
+           names : "Lalit Baba",
+           ages : 23,
+           citys : "Delhi"
+        }
+         let {names,ages,citys} = userse
+     
+         document.write(names +"<br>");
+         document.write(ages +"<br>");
+         document.write(citys +"<br>");
+     </script>
+     
+     <!-- Oop introduction -->
+      <script>
+         document.write ( "<h2> 10-Advance js Oop introduction </h2>")
+          class ag{
+           message(){
+              document.write("hello  Everyone"+"<br>");
+              // console.log("hello  Everyone");
+           }
+           sorry(){
+              document.write("sory Everyone"+"<br>");
+              //console.log("sory Everyone");
+           }
+           
+          }
+          let G = new ag();
+     
+          G.message();
+          G.sorry();
+     
+        //   e.g-2
+        //   class student{
+        //    constructor( fullName){
+        //       let fullName;
+        //       document.write("constructor function"+"<br>");
+        //    }
+        //    hello(){
+        //       document.write("hello"+this.fullName+"<br>");
+        //    }
+           
+        //   }
+        //   let A = new student();
+        //   b.fullName ="Lalit Baba"
+        //   h.fullName();
+     </script>
+     
+     <!-- Advance js Inheritance -->
+     <script>
+        document.write ( "<h2> 11-Advance js Inheritance</h2>")
+         class employee{
+          constructor(name){
+             document.write("constructor : employee"+ name +"<br>");
+             // console.log("constructor : employee");
+          }
+        }
+          class manager extends employee{
+           constructor(name){
+              super();
+             document.write("constructor : manager"+name+"<br>");
+          }
+          }
+        
+         let F = new employee("BABA");
+         let I = new manager("LALIT BABA");
+         </script>
+     
+     
+     <!-- 12-Advance js MODULES -->
+     <!-- <script type="module" src="./main.js">
+        document.write ( "<h2> 12-Advance js MODULES </h2>")
+        
+     </script> -->
+
+    <!-- AJAX  -->
+
+    <p id="demo">Here we load data.</p> 
+    <button onclick="loadData()">Click</button>
+
+    <script>
+        function loadData() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                  console.log (this.responseText);
+                }else if(this.readyState == 4 && this.status == 404){
+                    document.getElementById("demo").innerHTML = "File not found.";
+                }
+            };
+
+            xhttp.open('GET',"https://jsonplaceholder.typicode.com/posts",true);
+            xhttp.send();
+        }
+    </script> 
+
+    <!-- FETCH  -->
+
+
+     <!-- <script>
+        fetch("json/student_data.json")
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+
+            for(var x in data){
+                var a = `${data[x].name} - ${data[x].age} - ${data[x].city}<br>`;
+                document.write(a); 
+            }
+        })
+        .catch((error) => document.write("Can't fetch data"));
+
+        
+    </script>  -->
+    <form id="myform">
+        Title <input type="text" id="titleText"> <br><br>
+        Body <input type="text" id="bodyText"> <br><br>
+        User Id <input type ="text" id="userid"> <br><br>
+        <input type="submit" id="saveForm">
+    </form>
+    <script>
+              document.getElementById("saveForm").addEventListener("click", function(e){
+             e.preventDefault();
+
+                var obj = {
+            title: document.getElementById("titleText").value,
+            body: document.getElementById("bodyText").value,
+            userId: document.getElementById("userid").value,
+  };
+    
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+  method: 'POST',
+  body: JSON.stringify(obj),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+              });
+  </script>
+</body>
+</html>
